@@ -81,4 +81,4 @@ public class User implements UserDetails {
 }
 
 
-// NEXT: Chapter 2 -> UserRepository.jav
+// NEXT: CHAPTER 2 -> UserRepository.java

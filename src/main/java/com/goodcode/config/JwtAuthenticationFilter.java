@@ -10,6 +10,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+// CHAPTER 3
+
 // 1.
 // Component, Reository or Service. Helps us tell java to make this class a managed bean. We can use any one of them
 @Component
@@ -145,3 +147,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     }
 }
+
+// NEXT: CHAPTER 4 -> JwtService.java
