@@ -11,7 +11,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/notes")
 public class NoteController {
-
     final NoteService noteService;
 
     @Autowired
@@ -22,26 +21,20 @@ public class NoteController {
 
     // CREATE
     @PostMapping
-    public ResponseEntity<Note> createNote(@RequestBody Note note) {
-        Note createdNote = this.noteService.createNote(note);
+    public ResponseEntity<Note> createNote(@RequestBody NoteDTO note) {
+        Note createdNote = noteService.createNote(note);
         return ResponseEntity.ok(createdNote);
     }
 
     // READ
     @GetMapping("/{id}")
     public ResponseEntity<Note> getNote(@PathVariable("id") UUID id) {
-        Optional<Note> fetchedNote = this.noteService.getNote(id);
-
-        if (fetchedNote.isPresent()){
-            Note note = fetchedNote.get();
-            return ResponseEntity.ok(note);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Note note = noteService.getNote(id);
+        return ResponseEntity.ok(note);
     }
     @GetMapping
     public ResponseEntity<List<Note>> getNotes() {
-        var noteList = this.noteService.getNotes();
+        var noteList = noteService.getNotes();
         return ResponseEntity.ok(noteList);
     }
 
