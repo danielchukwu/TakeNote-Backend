@@ -18,7 +18,7 @@ import java.util.UUID;
 // CHAPTER 1
 
 // 1
-// Lombok Anotation - reduces boilerplate code by adding a constructor,
+// Lombok Annotation - reduces boilerplate code by adding a constructor,
 // getters and setters, equals and hashcode functions, toString methods etc...
 @Data
 @Builder  // Builds our entity using a design pattern builder
@@ -32,10 +32,17 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Column(name = "avatar", nullable = true, updatable = true)
+    private String avatar;
+    @Column(name = "name", nullable = false, updatable = true, length = 50)
     private String name;
+    @Column(name = "email", nullable = false, updatable = true, unique = true)
     private String email;
+    @Column(name = "password", nullable = false, updatable = true)
     private String password;
+    @Column(name = "updated_at", nullable = false, updatable = true)
     private LocalDateTime updatedAt;
+    @Column(name = "created_at", nullable = false, updatable = true)
     private LocalDateTime createdAt;
 
     // 3. Create the Enum type and add a field for it
