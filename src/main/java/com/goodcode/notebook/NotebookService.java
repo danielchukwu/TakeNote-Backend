@@ -1,6 +1,8 @@
 package com.goodcode.notebook;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.goodcode.user.UserRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -9,37 +11,38 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class NotebookService {
 
     final NotebookRepository notebookRepository;
-
-    @Autowired
-    public NotebookService(NotebookRepository notebookRepository) {
-        this.notebookRepository = notebookRepository;
-        this.notebookRepository.saveAll(defaultNotebooks());
-    }
-
-    public static List<Notebook> defaultNotebooks() {
-        return List.of(
-                new Notebook(UUID.randomUUID(), null, "Angular", "This are key notes on the technology angular I've been learning for some time now and I absolutely love the technology but in some ways react actually beats angular."),
-                new Notebook(UUID.randomUUID(), null, "Learning Javascript", "This are key notes on the technology angular I've been learning for some time now and I absolutely love the technology but in some ways react actually beats angular."),
-                new Notebook(UUID.randomUUID(), null, "Goals in Life", "This are key notes on the technology angular I've been learning for some time now and I absolutely love the technology but in some ways react actually beats angular."),
-                new Notebook(UUID.randomUUID(), null, "Bible Scriptures", "This are key notes on the technology angular I've been learning for some time now and I absolutely love the technology but in some ways react actually beats angular.")
-        );
-    }
+    final UserRepository userRepository;
 
     // CREATE
-    public Notebook createNotebook(Notebook notebook) {
-        return this.notebookRepository.save(notebook);
+    public Notebook createNotebook(NotebookDTO notebook) {
+        // Grab the note owner
+        var user = userRepository.findById(notebook.getUserId())
+                .orElseThrow(() -> new UsernameNotFoundException("user not found"));
+
+        var newNotebook = Notebook.builder()
+                .title(notebook.getTitle())
+                .avatar(notebook.getAvatar())
+                .description(notebook.getDescription())
+                .user(user)
+                .updatedAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
+                .build();
+        notebookRepository.save(newNotebook);
+
+        return newNotebook;
     }
 
     // READ
-    public Optional<Notebook> getNotebook(UUID id) { return this.notebookRepository.findById(id); }
-    public List<Notebook> getNotebooks() { return this.notebookRepository.findAll(); }
+    public Optional<Notebook> getNotebook(UUID id) { return notebookRepository.findById(id); }
+    public List<Notebook> getNotebooks() { return notebookRepository.findAll(); }
 
     // UPDATE
     public Notebook updateNotebook(UUID id, Notebook updatedNotebook) {
-        Notebook existingNotebook = this.notebookRepository.findById(id)
+        Notebook existingNotebook = notebookRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found"));
 
         // Update - Avatar, Title, Description, Updated At
@@ -48,12 +51,12 @@ public class NotebookService {
         existingNotebook.setDescription( updatedNotebook.getDescription() != null ? updatedNotebook.getDescription() : existingNotebook.getDescription());
         existingNotebook.setUpdatedAt(LocalDateTime.now());
 
-        return this.notebookRepository.save(existingNotebook);
+        return notebookRepository.save(existingNotebook);
     }
 
     // DELETE
     public void deleteNotebook(UUID id) {
-        this.notebookRepository.deleteById(id);
+        notebookRepository.deleteById(id);
     }
 
 }
