@@ -1,0 +1,42 @@
+CHAPTER 1 📁 user ↓
+- User.java
+  - Role
+
+CHAPTER 2
+- UserRepository.java
+
+CHAPTER 3 📁 config ↓
+- JwtAuthenticationFilter.java
+
+CHAPTER 4
+- JwtService.java
+
+CHAPTER 5
+- ApplicationConfig.java
+
+CHAPTER 6
+- JwtAuthenticationFilter.java
+
+CHAPTER 7
+- SecurityConfiguration.java
+
+CHAPTER 8
+- ApplicationConfig.java (Continuation.)
+  . Added `authenticationProvider` [required by CHAPTER 7]
+  . Added `PasswordEncoder`
+  . Added `authenticationManager`
+
+CHAPTER 9  📁 auth ↓
+- AuthenticationController.java
+
+CHAPTER 10
+- AuthenticationResponse.java
+
+CHAPTER 11
+- RegisterRequest.java
+
+CHAPTER 12
+- AuthenticationRequest.java
+
+CHAPTER 13
+- AuthenticationService.java
