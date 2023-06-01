@@ -1,6 +1,5 @@
 package com.goodcode.notebook;
 
-import com.goodcode.note.Note;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +19,7 @@ public class NotebookController {
 
     // CREATE
     @PostMapping
-    public ResponseEntity<Notebook> createNotebook(@RequestBody Notebook notebook) {
+    public ResponseEntity<Notebook> createNotebook(@RequestBody NotebookDTO notebook) {
         Notebook createdNotebook = this.notebookService.createNotebook(notebook);
         return ResponseEntity.ok(createdNotebook);
     }
