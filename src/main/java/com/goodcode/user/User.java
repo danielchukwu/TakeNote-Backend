@@ -1,6 +1,7 @@
 package com.goodcode.user;
 
 
+import com.goodcode.notebook.Notebook;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -84,6 +85,17 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @OneToMany(mappedBy = "user")
+    private Collection<Notebook> notebook;
+
+    public Collection<Notebook> getNotebook() {
+        return notebook;
+    }
+
+    public void setNotebook(Collection<Notebook> notebook) {
+        this.notebook = notebook;
     }
 }
 

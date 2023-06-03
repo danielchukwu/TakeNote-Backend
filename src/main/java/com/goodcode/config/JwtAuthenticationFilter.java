@@ -18,7 +18,7 @@ import java.io.IOException;
 // CHAPTER 3
 
 // 1.
-// Component, Reository or Service. Helps us tell java to make this class a managed bean. We can use any one of them
+// Component, Repository or Service. Helps us tell java to make this class a managed bean. We can use any one of them
 @Component
 // This tells Spring to make any field provided in these arg to be required
 @RequiredArgsConstructor

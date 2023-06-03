@@ -25,10 +25,10 @@ public class Notebook {
     private String avatar;
 
     @Column(name = "title", nullable = true, updatable = true)
-    private String title;
+    private String title = "My New Notebook";
 
     @Column(name = "description", length = 2000, nullable = true, updatable = true)
-    private String description;
+    private String description = "This is a description about my new notebook.";
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = true, updatable = true)
