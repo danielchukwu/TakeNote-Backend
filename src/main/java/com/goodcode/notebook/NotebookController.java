@@ -7,6 +7,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/v1/notebooks")
@@ -44,6 +45,8 @@ public class NotebookController {
             @RequestBody Notebook notebook,
             Principal principal
     )
+=======
+            Principal principal)
     {
         Notebook updateNotebook = this.notebookService.updateNotebook(id, notebook, principal);
         return ResponseEntity.ok(updateNotebook);
