@@ -1,13 +1,14 @@
 package com.goodcode.notebook;
 
+import com.goodcode.user.User;
 import com.goodcode.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -18,9 +19,9 @@ public class NotebookService {
     final UserRepository userRepository;
 
     // CREATE
-    public Notebook createNotebook(NotebookDTO notebook) {
+    public Notebook createNotebook(Notebook notebook, Principal principal) {
         // Grab the note owner
-        var user = userRepository.findById(notebook.getUserId())
+        var user = userRepository.findByEmail(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("user not found"));
 
         var newNotebook = Notebook.builder()
@@ -37,13 +38,19 @@ public class NotebookService {
     }
 
     // READ
-    public Optional<Notebook> getNotebook(UUID id) { return notebookRepository.findById(id); }
-    public List<Notebook> getNotebooks() { return notebookRepository.findAll(); }
+    public Notebook getNotebook(UUID id, Principal principal) {
+        return notebookRepository.findById(id)
+                .filter(notebook1 -> notebook1.getUser().getEmail().equals( principal.getName() ))
+                .orElseThrow(() -> new IllegalArgumentException("not found"));
+    }
+    public List<Notebook> getNotebooks(Principal principal) {
+        User user = userRepository.findByEmail(principal.getName()).get();
+        return notebookRepository.findAllByUserId(user.getId());
+    }
 
     // UPDATE
-    public Notebook updateNotebook(UUID id, Notebook updatedNotebook) {
-        Notebook existingNotebook = notebookRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("not found"));
+    public Notebook updateNotebook(UUID id, Notebook updatedNotebook, Principal principal) {
+        Notebook existingNotebook = getNotebook(id, principal);
 
         // Update - Avatar, Title, Description, Updated At
         existingNotebook.setAvatar( updatedNotebook.getAvatar() != null ? updatedNotebook.getAvatar() : existingNotebook.getAvatar());
@@ -55,8 +62,9 @@ public class NotebookService {
     }
 
     // DELETE
-    public void deleteNotebook(UUID id) {
-        notebookRepository.deleteById(id);
+    public void deleteNotebook(UUID id, Principal principal) {
+        Notebook notebook = getNotebook(id, principal);
+        notebookRepository.delete(notebook);
     }
 
 }

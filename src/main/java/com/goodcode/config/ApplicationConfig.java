@@ -66,6 +66,8 @@ public class ApplicationConfig {
         return config.getAuthenticationManager();
     }
 
+
+
     // NEXT: CHAPTER 9 -> AuthenticationController.java
     // LASTLY, we add our auth endpoints in a file named 📁auth > AuthenticationController.java
 }

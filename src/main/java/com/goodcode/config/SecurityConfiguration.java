@@ -41,6 +41,7 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session    // B: Explanation Ref down Below
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+                .cors(Customizer.withDefaults())                          // Enable CORS
                 .authenticationProvider(authenticationProvider)           // We want to tell spring lastly the authenticationProvider we will be using for our authentication
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)  // Use our `JwtAuthenticationFilter` before the UsernamePasswordAuthenticationFilter class
                 .csrf(new Customizer<CsrfConfigurer<HttpSecurity>>() {    // Disable CSRF

@@ -41,6 +41,7 @@ public class AuthenticationService {
         // return token
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .user(user)
                 .build();
     }
 
@@ -51,14 +52,13 @@ public class AuthenticationService {
                 new UsernamePasswordAuthenticationToken( request.getEmail(), request.getPassword())
         );
 
-        // If authentication was successful
-
         // find user by their email
         var user = repository.findByEmail(request.getEmail()).orElseThrow();
         // generate a jwt token for our new user
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .user(user)
                 .build();
     }
 
