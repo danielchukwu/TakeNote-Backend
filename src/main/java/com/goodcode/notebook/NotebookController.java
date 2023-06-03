@@ -36,6 +36,7 @@ public class NotebookController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @GetMapping
     public ResponseEntity<List<Notebook>> getNotebooks() {
         var notebookList = this.notebookService.getNotebooks();
