@@ -32,6 +32,7 @@ public class NotebookController {
         Notebook notebook = this.notebookService.getNotebook(id, principal);
         return ResponseEntity.ok(notebook);
     }
+
     @GetMapping
     public ResponseEntity<List<Notebook>> getNotebooks(Principal principal) {
         var notebookList = this.notebookService.getNotebooks(principal);
