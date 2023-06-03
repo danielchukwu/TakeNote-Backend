@@ -43,6 +43,9 @@ public class NotebookController {
     public ResponseEntity<Notebook> updateNotebook(
             @PathVariable("id") UUID id,
             @RequestBody Notebook notebook,
+            Principal principal
+    )
+=======
             Principal principal)
     {
         Notebook updateNotebook = this.notebookService.updateNotebook(id, notebook, principal);
