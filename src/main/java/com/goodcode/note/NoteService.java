@@ -1,11 +1,13 @@
 package com.goodcode.note;
 
 import com.goodcode.notebook.NotebookRepository;
+import com.goodcode.user.User;
 import com.goodcode.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -43,12 +45,14 @@ public class NoteService {
     }
 
     // READ
-    public Note getNote(UUID id) {
+    public Note getNote(UUID id, Principal principal) {
         return noteRepository.findById(id)
+                .filter(note -> note.getUser().getEmail().equals( principal.getName() ))
                 .orElseThrow(() ->  new UsernameNotFoundException("note not found"));
     }
-    public List<Note> getNotes() {
-        return noteRepository.findAll();
+    public List<Note> getNotes(Principal principal) {
+        User user = userRepository.findByEmail( principal.getName() ).get();
+        return noteRepository.findByUserId(user.getId());
     }
 
     // UPDATE

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,15 +28,16 @@ public class NoteController {
 
     // READ
     @GetMapping("/{id}")
-    public ResponseEntity<Note> getNote(@PathVariable("id") UUID id) {
-        Note note = noteService.getNote(id);
+    public ResponseEntity<Note> getNote(@PathVariable("id") UUID id, Principal principal) {
+        Note note = noteService.getNote(id, principal);
         return ResponseEntity.ok(note);
     }
     @GetMapping
-    public ResponseEntity<List<Note>> getNotes() {
-        var noteList = noteService.getNotes();
+    public ResponseEntity<List<Note>> getNotes(Principal principal) {
+        var noteList = noteService.getNotes(principal);
         return ResponseEntity.ok(noteList);
     }
+
 
     // UPDATE
     @PutMapping("/{id}")
