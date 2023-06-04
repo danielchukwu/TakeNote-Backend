@@ -42,7 +42,7 @@ public class JwtService {
                 .setClaims(extraClaims)      // Adding extra claims to the token
                 .setSubject(userDetails.getUsername())   // setting the subject of the claim
                 .setIssuedAt(new Date(System.currentTimeMillis()))   // When this claim was created
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))    // This claims Expiration date
+                .setExpiration(new Date(System.currentTimeMillis() + 100000 * 60 * 24))    // This claims Expiration date
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)    // Sign the token with our sign-in key and specify the algorithm to use
                 .compact();    // Generates and then returns our final token
     }
