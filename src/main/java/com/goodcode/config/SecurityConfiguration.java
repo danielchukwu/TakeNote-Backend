@@ -38,6 +38,7 @@ public class SecurityConfiguration {
                                 .anyRequest()
                                 .authenticated()
                 )
+                .cors(Customizer.withDefaults())         // A.5: Enabel CORSAA
                 .sessionManagement(session -> session    // B: Explanation Ref down Below
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
