@@ -1,10 +1,14 @@
 package com.goodcode.notebook;
 
+import com.goodcode.note.Note;
+import com.goodcode.note.NoteRepository;
+import com.goodcode.user.User;
 import com.goodcode.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +19,7 @@ import java.util.UUID;
 public class NotebookService {
 
     final NotebookRepository notebookRepository;
+    final NoteRepository noteRepository;
     final UserRepository userRepository;
 
     // CREATE
@@ -37,8 +42,21 @@ public class NotebookService {
     }
 
     // READ
-    public Optional<Notebook> getNotebook(UUID id) { return notebookRepository.findById(id); }
-    public List<Notebook> getNotebooks() { return notebookRepository.findAll(); }
+    public Notebook getNotebook(UUID id, Principal principal) {
+        // Getting a single notebook
+        return notebookRepository.findById(id)
+                .filter(notebook -> notebook.getUser().getEmail().equals( principal.getName() ))
+                .orElseThrow(() -> new IllegalArgumentException("note not found"));
+    }
+    public List<Note> getNotebookNotes(UUID id, Principal principal) {
+        // Getting a List of notes for a notebook
+        return noteRepository.findByNotebookId(id);
+    }
+    public List<Notebook> getNotebooks(Principal principal) {
+        // Getting a list of notebooks
+        User user = userRepository.findByEmail(principal.getName()).get();
+        return notebookRepository.findByUserId(user.getId());
+    }
 
     // UPDATE
     public Notebook updateNotebook(UUID id, Notebook updatedNotebook) {
@@ -58,5 +76,4 @@ public class NotebookService {
     public void deleteNotebook(UUID id) {
         notebookRepository.deleteById(id);
     }
-
 }

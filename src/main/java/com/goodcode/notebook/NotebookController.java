@@ -1,8 +1,10 @@
 package com.goodcode.notebook;
 
+import com.goodcode.note.Note;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,19 +28,18 @@ public class NotebookController {
 
     // READ
     @GetMapping("/{id}")
-    public ResponseEntity<Notebook> getNotebook(@PathVariable("id") UUID id) {
-        Optional<Notebook> fetchedNote = this.notebookService.getNotebook(id);
-
-        if (fetchedNote.isPresent()){
-            Notebook notebook = fetchedNote.get();
-            return ResponseEntity.ok(notebook);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Notebook> getNotebook(@PathVariable("id") UUID id, Principal principal) {
+        Notebook notebook = this.notebookService.getNotebook(id, principal);
+        return ResponseEntity.ok(notebook);
+    }
+    @GetMapping("/{id}/notes")
+    public ResponseEntity<List<Note>> getNotebookNotes(@PathVariable("id") UUID id, Principal principal) {
+        List<Note> notebook = this.notebookService.getNotebookNotes(id, principal);
+        return ResponseEntity.ok(notebook);
     }
     @GetMapping
-    public ResponseEntity<List<Notebook>> getNotebooks() {
-        var notebookList = this.notebookService.getNotebooks();
+    public ResponseEntity<List<Notebook>> getNotebooks(Principal principal) {
+        var notebookList = this.notebookService.getNotebooks(principal);
         return ResponseEntity.ok(notebookList);
     }
 
