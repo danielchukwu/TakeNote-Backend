@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +36,7 @@ public class NoteController {
     @GetMapping
     public ResponseEntity<List<Note>> getNotes(Principal principal) {
         var noteList = noteService.getNotes(principal);
+        noteList.sort(Comparator.comparing(Note::getUpdatedAt).reversed());
         return ResponseEntity.ok(noteList);
     }
 
