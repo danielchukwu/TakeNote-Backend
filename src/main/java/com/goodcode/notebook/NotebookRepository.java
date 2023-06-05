@@ -8,5 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface NotebookRepository extends JpaRepository<Notebook, UUID> {
-    List<Notebook> findByUserId(UUID id);
+    List<Notebook> findAllByUserId(UUID id);
 }

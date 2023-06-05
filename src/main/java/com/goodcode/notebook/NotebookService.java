@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,9 +24,9 @@ public class NotebookService {
     final UserRepository userRepository;
 
     // CREATE
-    public Notebook createNotebook(NotebookDTO notebook) {
+    public Notebook createNotebook(NotebookDTO notebook, Principal principal) {
         // Grab the note owner
-        var user = userRepository.findById(notebook.getUserId())
+        var user = userRepository.findByEmail(principal.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("user not found"));
 
         var newNotebook = Notebook.builder()
@@ -55,7 +56,9 @@ public class NotebookService {
     public List<Notebook> getNotebooks(Principal principal) {
         // Getting a list of notebooks
         User user = userRepository.findByEmail(principal.getName()).get();
-        return notebookRepository.findByUserId(user.getId());
+        List<Notebook> notebookList = notebookRepository.findAllByUserId(user.getId());
+        notebookList.sort(Comparator.comparing(Notebook::getUpdatedAt).reversed());
+        return notebookList;
     }
 
     // UPDATE

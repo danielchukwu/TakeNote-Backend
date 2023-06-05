@@ -20,8 +20,8 @@ public class NotebookController {
 
     // CREATE
     @PostMapping
-    public ResponseEntity<Notebook> createNotebook(@RequestBody NotebookDTO notebook) {
-        Notebook createdNotebook = this.notebookService.createNotebook(notebook);
+    public ResponseEntity<Notebook> createNotebook(@RequestBody NotebookDTO notebook, Principal principal) {
+        Notebook createdNotebook = this.notebookService.createNotebook(notebook, principal);
         return ResponseEntity.ok(createdNotebook);
     }
 
