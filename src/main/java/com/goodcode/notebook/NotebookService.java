@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -51,7 +50,9 @@ public class NotebookService {
     }
     public List<Note> getNotebookNotes(UUID id, Principal principal) {
         // Getting a List of notes for a notebook
-        return noteRepository.findByNotebookId(id);
+        List<Note> noteList = noteRepository.findByNotebookId(id);
+        noteList.sort(Comparator.comparing(Note::getUpdatedAt).reversed());
+        return noteList;
     }
     public List<Notebook> getNotebooks(Principal principal) {
         // Getting a list of notebooks
@@ -62,8 +63,9 @@ public class NotebookService {
     }
 
     // UPDATE
-    public Notebook updateNotebook(UUID id, Notebook updatedNotebook) {
+    public Notebook updateNotebook(UUID id, Notebook updatedNotebook, Principal principal) {
         Notebook existingNotebook = notebookRepository.findById(id)
+                .filter(notebook -> notebook.getUser().getEmail().equals( principal.getName() ))
                 .orElseThrow(() -> new IllegalArgumentException("not found"));
 
         // Update - Avatar, Title, Description, Updated At
