@@ -1,5 +1,6 @@
 package com.goodcode.note;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,16 +10,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/notes")
 public class NoteController {
     final NoteService noteService;
-
-    @Autowired
-    public NoteController(NoteService noteService) {
-        this.noteService = noteService;
-    }
-
 
     // CREATE
     @PostMapping

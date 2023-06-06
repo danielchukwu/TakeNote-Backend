@@ -1,6 +1,7 @@
 package com.goodcode.notebook;
 
 import com.goodcode.note.Note;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,15 +9,11 @@ import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/notebooks")
 public class NotebookController {
-
     private final NotebookService notebookService;
-
-    public NotebookController(NotebookService notebookService) {
-        this.notebookService = notebookService;
-    }
 
     // CREATE
     @PostMapping
@@ -46,9 +43,10 @@ public class NotebookController {
     @PutMapping("/{id}")
     public ResponseEntity<Notebook> updateNotebook(
             @PathVariable("id") UUID id,
-            @RequestBody Notebook notebook)
+            @RequestBody Notebook notebook,
+            Principal principal)
     {
-        Notebook updateNotebook = this.notebookService.updateNotebook(id, notebook);
+        Notebook updateNotebook = this.notebookService.updateNotebook(id, notebook, principal);
         return ResponseEntity.ok(updateNotebook);
     }
 
