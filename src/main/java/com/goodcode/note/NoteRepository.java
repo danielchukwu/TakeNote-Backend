@@ -8,6 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface NoteRepository extends JpaRepository<Note, UUID> {
-    List<Note> findByUserId(UUID userId);
-    List<Note> findByNotebookId(UUID notebookId);
+    List<Note> findAllByUserId(UUID userId);
+    List<Note> findAllByNotebookId(UUID notebookId);
 }
