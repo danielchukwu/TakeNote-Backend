@@ -50,7 +50,7 @@ public class NotebookService {
     }
     public List<Note> getNotebookNotes(UUID id, Principal principal) {
         // Getting a List of notes for a notebook
-        List<Note> noteList = noteRepository.findByNotebookId(id);
+        List<Note> noteList = noteRepository.findAllByNotebookId(id);
         noteList.sort(Comparator.comparing(Note::getUpdatedAt).reversed());
         return noteList;
     }
@@ -79,6 +79,9 @@ public class NotebookService {
 
     // DELETE
     public void deleteNotebook(UUID id) {
+        // delete all notes owned by this notebook
+        List<Note> notesList = noteRepository.findAllByNotebookId(id);
+        // delete notebook
         notebookRepository.deleteById(id);
     }
 }
