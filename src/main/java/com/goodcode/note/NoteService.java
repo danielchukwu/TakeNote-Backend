@@ -52,7 +52,7 @@ public class NoteService {
     }
     public List<Note> getNotes(Principal principal) {
         User user = userRepository.findByEmail( principal.getName() ).get();
-        return noteRepository.findByUserId(user.getId());
+        return noteRepository.findAllByUserId(user.getId());
     }
 
     // UPDATE
