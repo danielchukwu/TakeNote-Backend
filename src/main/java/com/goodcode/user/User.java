@@ -1,6 +1,7 @@
 package com.goodcode.user;
 
 
+import com.goodcode.notebook.Notebook;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 // CHAPTER 1
@@ -40,6 +42,8 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "password", nullable = false, updatable = true)
     private String password;
+    @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
+    private List<Notebook> notebook;
     @Column(name = "updated_at", nullable = false, updatable = true)
     private LocalDateTime updatedAt;
     @Column(name = "created_at", nullable = false, updatable = true)
