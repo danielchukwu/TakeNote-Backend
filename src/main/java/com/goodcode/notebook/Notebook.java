@@ -1,5 +1,6 @@
 package com.goodcode.notebook;
 
+import com.goodcode.note.Note;
 import com.goodcode.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -33,6 +35,9 @@ public class Notebook {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = true, updatable = true)
     private User user;
+
+    @OneToMany(mappedBy = "notebook", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Set<Note> notes;
 
     @Column(name = "updated_at", nullable = false, updatable = true)
     private LocalDateTime updatedAt;
