@@ -81,6 +81,7 @@ public class NotebookService {
     public void deleteNotebook(UUID id) {
         // delete all notes owned by this notebook
         List<Note> notesList = noteRepository.findAllByNotebookId(id);
+        noteRepository.deleteAll(notesList);
         // delete notebook
         notebookRepository.deleteById(id);
     }
