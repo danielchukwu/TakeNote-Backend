@@ -1,6 +1,7 @@
 package com.goodcode.user;
 
 
+import com.goodcode.notebook.Notebook;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -40,6 +42,8 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "password", nullable = false, updatable = true)
     private String password;
+//    @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    private List<Notebook> notebooks = new ArrayList<Notebook>();
     @Column(name = "updated_at", nullable = false, updatable = true)
     private LocalDateTime updatedAt;
     @Column(name = "created_at", nullable = false, updatable = true)
