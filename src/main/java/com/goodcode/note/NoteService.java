@@ -55,6 +55,7 @@ public class NoteService {
         return noteRepository.findAllByUserId(user.getId());
     }
 
+
     // UPDATE
     public Note updateNote(UUID id, Note updatedNote) {
         Note existingNote = noteRepository.findById(id)
