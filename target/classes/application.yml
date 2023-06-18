@@ -1,29 +1,13 @@
-##Production
-#spring:
-#  datasource:
-#    url: jdbc:postgresql://dpg-ci6ldaunqql0ld992msg-a.oregon-postgres.render.com/takenote
-#    username: goodcode
-#    password: Txo7JITyyENFdkTaF5M184AVAvj6bnl1
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-##      ddl-auto: create-drop
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.PostgreSQLDialect
-#        format_sql: true
-#    show-sql: true
-
-#Development
+#Production
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5332/takenote
+    url: jdbc:postgresql://dpg-ci6ldaunqql0ld992msg-a.oregon-postgres.render.com/takenote
     username: goodcode
-    password: password
+    password: Txo7JITyyENFdkTaF5M184AVAvj6bnl1
   jpa:
     hibernate:
       ddl-auto: update
-    #      ddl-auto: create-drop
+#      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
