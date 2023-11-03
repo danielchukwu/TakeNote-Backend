@@ -14,13 +14,13 @@ services:
       - 5332:5432
     restart: unless-stopped
 
-  takenote_bk:
-    container_name: takenote_bk1
-    build: .
-    ports:
-      - 8080:8080
-    networks:
-      - db
+#  takenote_bk:
+#    container_name: takenote_bk1
+#    build: .
+#    ports:
+#      - 8080:8080
+#    networks:
+#      - db
 #    restart: unless-stopped
 
 networks:

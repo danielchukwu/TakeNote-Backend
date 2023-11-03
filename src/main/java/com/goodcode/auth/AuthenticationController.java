@@ -1,11 +1,17 @@
 package com.goodcode.auth;
 
+import com.goodcode.user.User;
+import com.goodcode.user.UserRepository;
+import com.goodcode.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 // CHAPTER 9
 
@@ -16,19 +22,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     // Before Implementing this Controller Class. Complete all the below chapter dependencies
-    private final AuthenticationService service;
+    private final AuthenticationService authService;
+    private final UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        // use service to register
-        System.out.println("Register was called");
-        return ResponseEntity.ok(service.register(request));
+        // Check that users email is unique
+        if (userService.existsByEmail(request.getEmail())){
+            return ResponseEntity.status(409).body(new AuthenticationResponse());
+        }
+        return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         // use service to authenticate
-        return ResponseEntity.ok(service.authenticate(request));
+        return ResponseEntity.ok(authService.authenticate(request));
     }
 
 }

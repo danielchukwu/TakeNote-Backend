@@ -1,9 +1,9 @@
 #Production
 spring:
   datasource:
-    url: jdbc:postgresql://dpg-ci6ldaunqql0ld992msg-a.oregon-postgres.render.com/takenote
-    username: goodcode
-    password: Txo7JITyyENFdkTaF5M184AVAvj6bnl1
+    url: jdbc:postgresql://dpg-cl2h9ho310os73b5qgjg-a.oregon-postgres.render.com/takenote_37f0
+    username: chukwudaniel
+    password: BOAbDUk8qz3e1bI3BoSAGzvcCTS4vpyo
   jpa:
     hibernate:
       ddl-auto: update
@@ -13,3 +13,22 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: true
+
+
+#postgres://chukwudaniel:BOAbDUk8qz3e1bI3BoSAGzvcCTS4vpyo@dpg-cl2h9ho310os73b5qgjg-a:oregon-postgres:render:com/takenote_37f0:
+
+#Development
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://localhost:5332/takenote
+#    username: goodcode
+#    password: password
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+##      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        format_sql: true
+#    show-sql: true

@@ -1,5 +1,6 @@
 package com.goodcode.user;
 
+import com.goodcode.auth.AuthenticationResponse;
 import com.goodcode.notebook.Notebook;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,6 @@ public class UserService {
     public User getUser(UUID id) {
         return this.userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("not found"));
-
     }
     public List<User> getUsers() { return this.userRepository.findAll(); }
 
@@ -41,5 +41,10 @@ public class UserService {
     // DELETE
     public void deleteUser(UUID id) {
         this.userRepository.deleteById(id);
+    }
+
+    // EXISTS
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

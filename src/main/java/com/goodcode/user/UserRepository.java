@@ -14,6 +14,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     // 2. Add custom method
     Optional<User> findByEmail(String email);
+
+    Boolean existsByEmail(String email);
 }
 
 // NEXT: CHAPTER 3 -> JwtAuthenticationFilter.java

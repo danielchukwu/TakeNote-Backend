@@ -1,5 +1,4 @@
 package com.goodcode.auth;
-
 import com.goodcode.config.JwtService;
 import com.goodcode.user.Role;
 import com.goodcode.user.User;
@@ -61,5 +60,4 @@ public class AuthenticationService {
                 .user(new UserDTO(user.getId(), user.getAvatar(), user.getName(), user.getEmail()))
                 .build();
     }
-
 }
